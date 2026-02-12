@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage[dvipsnames]{xcolor} % adding colour
+\usepackage{amsmath} % adding math equations
+\usepackage{natbib} % adding BibTeX support
+\usepackage{hyperref}
+
+\begin{document}
+	\begin{center}
+
+		\LARGE{\textbf{STA380 Project Proposal}} \\
+        \vspace{1em}
+        \Large{Permutation Test on ECG-Derived ``Age Gap'' Using the CODE-15\% Dataset (Zenodo 4916206)} \\
+        \vspace{1em}
+        \normalsize\textbf{Yanming Zhao, Meizhi Dong, Shijun Chen,\\Yaohe Wang, Hengchen Cao} \\
+        \vspace{1em}
+        \normalsize{University of Toronto, Mississauga}
+
+	\end{center}
+
+    \begin{normalsize}
+    We propose a project under \textbf{Theme 3, Topic 11: Permutation Test}. We will use the publicly available \textbf{CODE-15\% ECG dataset} 
+    hosted on Zenodo (record \textbf{4916206}) \citep{code15_zenodo_4916206}. The app will implement a two-sample permutation test comparing subjects with atrial fibrillation (AF) versus those without AF.
+
+	\section{Project Topic}
+    \textbf{Permutation Test (Advanced +2):} a two-sample permutation test for detecting differences between \textbf{AF} and \textbf{non-AF} groups on an ECG-derived continuous outcome.
+
+	\section{Simulation vs. Dataset}
+    This project is \textbf{dataset-based}. We will extract relevant variables from the dataset metadata file (e.g., \texttt{exams.csv}), including:
+    \begin{itemize}
+        \item \texttt{AF} (binary group label),
+        \item \texttt{age} (chronological age),
+        \item \texttt{nn\_predicted\_age} (neural-network predicted ``ECG age'').
+    \end{itemize}
+    Our main analysis does not require raw waveform files, but if time permits we will include an optional extension using simple waveform features as an additional outcome.
+
+	\section{Project Details}
+    \textbf{Research question.} Do patients with \textbf{AF} and \textbf{non-AF} have statistically significant differences in an ECG-derived ``age gap''?
+
+    \vspace{0.5em}
+    \noindent \textbf{Groups (two samples).}
+    \begin{itemize}
+        \item Group 1: \texttt{AF == TRUE} (AF)
+        \item Group 2: \texttt{AF == FALSE} (non-AF)
+    \end{itemize}
+
+    \noindent \textbf{Outcome variable.} We define the continuous outcome (``Age Gap''):
+    \[
+        g = \texttt{nn\_predicted\_age} - \texttt{age}.
+    \]
+    Intuitively, $g>0$ means the ECG-based model predicts an ``older'' physiological age than chronological age, while $g<0$ suggests the opposite.
+
+    \vspace{0.5em}
+    \noindent \textbf{Hypotheses.}
+    \begin{itemize}
+        \item $H_{0}$: The distribution of $g$ is the same for AF and non-AF (group label is exchangeable).
+        \item $H_{1}$: The distributions differ (mean/median/overall shape differs).
+    \end{itemize}
+
+    \noindent \textbf{Test statistic (user-selectable).} To demonstrate flexibility of permutation testing, users can choose:
+    \begin{enumerate}
+        \item Mean difference: $T = \bar g_{\text{AF}} - \bar g_{\text{nonAF}}$
+        \item Median difference: $T = \mathrm{med}(g_{\text{AF}}) - \mathrm{med}(g_{\text{nonAF}})$
+        \item Kolmogorov--Smirnov statistic: $T = \sup_{x} | \hat F_{\text{AF}}(x) - \hat F_{\text{nonAF}}(x) |$
+    \end{enumerate}
+
+    \noindent \textbf{Permutation procedure.} Let $T_{\text{obs}}$ be the observed statistic computed from the original labels.
+    \begin{enumerate}
+        \item Fix the observed $g$ values and randomly permute AF labels across observations.
+        \item For $b=1,\dots,B$, compute the permuted statistic $T_b$.
+        \item Compute a two-sided p-value:
+        \[
+            p = \frac{1 + \sum_{b=1}^{B} \mathbf{1}\left(|T_b| \ge |T_{\text{obs}}|\right)}{B+1}.
+        \]
+        \item At level $\alpha$, report \textbf{reject} or \textbf{fail to reject} $H_0$.
+    \end{enumerate}
+
+    \noindent \textbf{Independence / repeated exams.} Since the dataset may contain multiple exams per patient, we will explicitly address non-independence by providing:
+    \begin{itemize}
+        \item \textbf{Default (recommended):} restrict to \textbf{one exam per patient} (user may select ``earliest'' or ``random'' exam per \texttt{patient\_id}).
+        \item \textbf{Optional extension:} a \textbf{block permutation} approach at the patient level (permute group labels at the \texttt{patient\_id} level), and compare results to the default approach.
+    \end{itemize}
+
+    \noindent \textbf{Outputs provided.}
+    \begin{itemize}
+        \item A histogram/density plot of $\{T_b\}_{b=1}^B$ with a vertical line at $T_{\text{obs}}$
+        \item The permutation p-value and a clear reject/fail-to-reject statement
+        \item A summary table including group sizes and descriptive statistics of $g$ (mean, median, SD)
+        \item (Optional) sensitivity comparison across statistics and sampling modes (per-patient vs exam-level)
+    \end{itemize}
+
+	\section{User Inputs (Shiny Components)}
+    Users will be able to modify the following:
+    \begin{enumerate}
+        \item Random seed
+        \item Number of permutations $B$ (e.g., 500 / 1000 / 5000)
+        \item Significance level $\alpha$ and one-sided vs two-sided testing
+        \item Choice of test statistic (mean difference / median difference / KS)
+        \item Data handling option for repeated exams:
+            \begin{itemize}
+                \item one exam per patient (earliest vs random),
+                \item (optional) patient-level block permutation.
+            \end{itemize}
+        \item Display options (toggle):
+            \begin{itemize}
+                \item permutation distribution plot,
+                \item group summary table,
+                \item brief assumptions/caveats panel.
+            \end{itemize}
+    \end{enumerate}
+
+\end{normalsize}
+
+\nocite{*}
+\bibliographystyle{abbrvnat}
+\bibliography{bibliography}
+
+\end{document}
