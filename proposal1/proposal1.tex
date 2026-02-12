@@ -35,6 +35,54 @@
     \end{itemize}
     Our main analysis does not require raw waveform files, but if time permits we will include an optional extension using simple waveform features as an additional outcome.
 
+    \section{Simulation vs. Dataset}
+
+    This project is \textbf{dataset-based}. We will use the publicly available
+    \textbf{CODE-15\% ECG dataset} hosted on Zenodo (record 4916206) 
+    \citep{code15_zenodo_4916206}.
+
+    \subsection*{Dataset Description}
+
+    The CODE-15\% dataset is a large-scale clinical electrocardiogram (ECG) database
+    consisting of approximately 345,779 ECG exams from 233,770 patients collected
+    between 2010 and 2016. Each exam contains demographic information (e.g.,
+    chronological age and sex), automated diagnostic labels (e.g., atrial
+    fibrillation (AF), right bundle branch block, and other ECG abnormalities),
+    and a neural-network–predicted ECG age derived from a deep learning model.
+
+    Although the raw ECG waveforms (12 leads, 4096 time points at 400 Hz sampling rate)
+    are available, our primary analysis focuses on structured metadata in
+    \texttt{exams.csv}. In particular, we will use:
+
+    \begin{itemize}
+        \item \texttt{AF}: binary indicator for atrial fibrillation,
+        \item \texttt{age}: chronological age,
+        \item \texttt{nn\_predicted\_age}: deep neural network predicted ECG age.
+    \end{itemize}
+
+    \subsection*{Outcome Definition}
+
+    We define the continuous outcome variable:
+
+    \[
+    g = \texttt{nn\_predicted\_age} - \texttt{age},
+    \]
+
+    which we refer to as the \textit{Age Gap}. A positive value ($g>0$) indicates
+    that the model predicts an ECG-derived physiological age greater than the
+    chronological age, while a negative value ($g<0$) indicates the opposite.
+    This provides a clinically meaningful continuous variable suitable for
+    two-sample comparison.
+
+    \subsection*{Statistical Considerations}
+
+    Because multiple ECG exams may correspond to the same patient
+    (\texttt{patient\_id}), observations may not be strictly independent.
+    To address this issue, our default implementation will restrict the analysis
+    to one exam per patient (e.g., earliest or randomly selected exam).
+    As an optional extension, we will implement a patient-level block permutation
+    procedure to preserve within-patient dependence structure.
+
 	\section{Project Details}
     \textbf{Research question.} Do patients with \textbf{AF} and \textbf{non-AF} have statistically significant differences in an ECG-derived ``age gap''?
 
