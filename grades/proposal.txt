@@ -1,0 +1,12 @@
+general thoughts about your statistical considerations:
+you are referring to the repeated measures case.
+
+you could either do a repeated-measures anova (sometimes taught in STA305) or you could use as linear mixed model with patient_id as  grouping variable. I an more familiar with the former as I'm a developer for popular mixed modelling packages (mostly lme4, but I've read glmmTMB code). That being said, you are doing a permutation test, in which the variant taught in class doesn't consider grouping terms and I'm not too familiar with permutation tests that support repeated measures as well. 
+
+I think in general to keep independence I'd remove all repeated measures and keep the latest result (which is what you wrote as default (recommended)), if the dataset is large enough, although if you want to explore models that account for repeated measures you are fine to do that (but let's have conversations about them).
+
+rubric:
+more than 2 pages (-0.1)
+no statement regarding generative AI use or lack thereof (-0.1)
+
+I am planning to apply bonus marks after the "Basic Implementation Check" checkpoint, because some students might be switching groups/topics/opting out. I have set a reminder to do this.
