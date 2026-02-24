@@ -51,10 +51,27 @@ filter_to_unique_patient <- function(df, method = "latest", seed = 6) {
       one_patient[sample(nrow(one_patient), size = 1), ]
     }))
 
-  } else {
-    stop("method must be 'latest' or 'random'")
-  }
-
+  } 
   rownames(df) <- NULL
+  return(df)
+}
+
+
+#' Compute the ECG-derived Age Gap
+#' @description Adds a new column \code{age_gap} to the data frame, defined as
+#' \deqn{g = \texttt{nn\_predicted\_age} - \texttt{age}.}
+#' @param df a data frame containing numeric columns \code{nn_predicted_age}
+#' and \code{age}.
+#' @return the same data frame with one extra column \code{age_gap}.
+#' @examples
+#' \dontrun{
+#' df <- load_ecg_data("data/exams.csv")
+#' df <- filter_one_per_patient(df)
+#' df <- compute_age_gap(df)
+#' summary(df$age_gap)
+#' }
+#' @export
+compute_age_gap <- function(df) {
+  df$age_gap <- df$nn_predicted_age - df$age
   return(df)
 }
