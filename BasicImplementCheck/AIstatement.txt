@@ -1,0 +1,1 @@
+We use AI tools (ChatGPT, Claude) to clarify documentation in roxygen2 form, improve wording in written explanations, assist with minor debugging or formatting issues, and support R syntax for function usage.
