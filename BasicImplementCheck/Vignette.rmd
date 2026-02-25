@@ -1,7 +1,7 @@
 ---
 title: "Vignette: Basic Implementation Check (Permutation Test on ECG Age Gap)"
 output:
-  rmarkdown::html_vignette
+  pdf_document
 vignette: >
   %\VignetteIndexEntry{Basic Implementation Check}
   %\VignetteEngine{knitr::rmarkdown}
