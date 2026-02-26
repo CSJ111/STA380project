@@ -121,9 +121,11 @@ run_permutation_test <- function(x, y,
                                  B    = 10000,
                                  seed = 42) {
 
-  if (!stat %in% c("mean", "median", "ks")) {
-    stop("choose one of stats: 'mean', 'median', 'ks'")
-  }
+  ## Anna: the commented out code is made reundant by this function.
+  stat <- match.arg(stat, c("mean", "median", "ks"))
+  #if (!stat %in% c("mean", "median", "ks")) {
+  #  stop("choose one of stats: 'mean', 'median', 'ks'")
+  #}
   calc_stat <- function(a, b) {
     if (stat == "mean")   return(mean(a)   - mean(b))
     if (stat == "median") return(median(a) - median(b))

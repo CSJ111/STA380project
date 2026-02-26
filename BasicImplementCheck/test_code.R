@@ -163,7 +163,12 @@ test_that("run_permutation_test rejects invalid stat argument", {
   y <- df2$age_gap[df2$AF == FALSE]
   
   expect_error(
-    run_permutation_test(x, y, stat = "invalid"),
-    "choose one of stats"
+    run_permutation_test(x, y, stat = "invalid")#,
+    #"choose one of stats"
+  )
+  
+  # below should be valid, match.arg helps you.
+  expect_no_error(
+    run_permutation_test(x, y, stat = "media")
   )
 })
