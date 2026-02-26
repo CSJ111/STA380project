@@ -19,7 +19,7 @@ source("functions.R")
 ```
 ## 1. Overview
 
-This package implements the core workflow for our STA380 project:
+This package implements the core workflow for our project:
 
 a **two-sample permutation test** comparing participants with atrial fibrillation (AF) versus those without AF on an ECG-derived continuous outcome called *Age Gap*:
 
@@ -56,7 +56,7 @@ The basic pipeline uses four key functions:
    Runs the permutation test and returns `t_obs`, `t_perm`, `p_value`, and related metadata.
 
 
-## 3. Demonstration with Synthetic Data (Fully Runnable)
+## 3. Demonstration with Synthetic Data
 
 For the vignette, we use a small synthetic dataset so that anyone can run the example without needing the real CODE-15% files.
 ```{r make-synthetic-data}
@@ -120,6 +120,7 @@ hist(res_mean$t_perm, breaks = 30,
      xlab = "Permuted statistics")
 abline(v = res_mean$t_obs, lwd = 2)
 ```
+
 ## 5. Brief Assumption / Caveat Check
 
 Permutation testing assumes that under \( H_0 \), the group labels are exchangeable.
