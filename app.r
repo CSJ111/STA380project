@@ -1,15 +1,15 @@
-# 确保安装了这些包: install.packages(c("shiny", "bslib", "dplyr", "ggplot2"))
+# Ensure these packages are installed: install.packages(c("shiny", "bslib", "dplyr", "ggplot2"))
 library(shiny)
 library(bslib)
 library(dplyr)
 library(ggplot2)
 
-# --- UI 用户界面定义 ---
+# --- UI Definition ---
 ui <- page_sidebar(
   title = "STA380 Project: Permutation Test on ECG Age Gap",
   theme = bs_theme(version = 5, bootswatch = "flatly"),
   
-  # 侧边栏：输入控制面板
+  # Sidebar: Input Controls
   sidebar = sidebar(
     numericInput("seed", "1. Random Seed", value = 123),
     selectInput("B", "2. Number of Permutations (B)", 
@@ -27,7 +27,7 @@ ui <- page_sidebar(
     actionButton("run", "Run Permutation Test", class = "btn-primary")
   ),
   
-  # 主面板：输出结果
+  # Main Panel: Output Results
   layout_columns(
     col_widths = 12,
     card(
@@ -45,15 +45,15 @@ ui <- page_sidebar(
   )
 )
 
-# --- Server 后台逻辑 ---
+# --- Server Logic ---
 server <- function(input, output, session) {
   
-  # 1. 读取或生成数据 (Reactive)
+  # 1. Read or generate data (Reactive)
   my_data <- reactive({
     if (file.exists("exams.csv")) {
       df <- read.csv("exams.csv")
     } else {
-      # 如果找不到真实数据，生成 mock data 保证程序能跑
+      # Generate mock data if the real dataset is not found
       set.seed(42)
       df <- data.frame(
         patient_id = sample(1:500, 800, replace = TRUE),
@@ -63,45 +63,51 @@ server <- function(input, output, session) {
       )
     }
     
-    # 计算 Age Gap (g)
+    # Convert to numeric to prevent parsing issues
+    df$age <- as.numeric(df$age)
+    df$nn_predicted_age <- as.numeric(df$nn_predicted_age)
+    
+    # Calculate Age Gap (g)
     df$g <- df$nn_predicted_age - df$age
     
-    # 处理重复测量 (Data Handling)
+    # CRITICAL FIX: Remove rows with NA in 'g' or 'AF'
+    df <- df[!is.na(df$g) & !is.na(df$AF), ]
+    
+    # Data Handling for repeated exams
     if (input$data_handling == "One exam per patient (Random)") {
       df <- df %>% group_by(patient_id) %>% slice_sample(n = 1) %>% ungroup()
     } else {
-      # 简化的最早记录处理（假设源数据第一条就是最早的）
+      # Keep the earliest record (assuming first row is earliest)
       df <- df %>% group_by(patient_id) %>% slice(1) %>% ungroup()
     }
     return(df)
   })
   
-  # 2. 当点击 Run 按钮时，执行置换检验
+  # 2. Execute permutation test when the Run button is clicked
   perm_results <- eventReactive(input$run, {
     req(my_data())
     df <- my_data()
     set.seed(input$seed)
     B <- as.numeric(input$B)
     
-    # 提取两组数据
+    # Extract data for both groups
     g_af <- df$g[df$AF == TRUE]
     g_nonaf <- df$g[df$AF == FALSE]
     g_all <- df$g
     af_labels <- df$AF
     
-    # 计算观测统计量
+    # Function to calculate the observed statistic
     calc_stat <- function(af, nonaf, type) {
       if (type == "Mean Difference") return(mean(af) - mean(nonaf))
       if (type == "Median Difference") return(median(af) - median(nonaf))
       if (type == "Kolmogorov-Smirnov (KS)") {
-        # 简单 KS 统计量计算
         suppressWarnings(return(ks.test(af, nonaf)$statistic))
       }
     }
     
     obs_stat <- calc_stat(g_af, g_nonaf, input$stat)
     
-    # 运行置换循环
+    # Run permutation loop
     perm_stats <- numeric(B)
     withProgress(message = 'Running Permutations...', value = 0, {
       for (i in 1:B) {
@@ -109,17 +115,19 @@ server <- function(input, output, session) {
         sim_af <- g_all[shuffled_labels == TRUE]
         sim_nonaf <- g_all[shuffled_labels == FALSE]
         perm_stats[i] <- calc_stat(sim_af, sim_nonaf, input$stat)
-        if (i %% 100 == 0) incProgress(100/B) # 更新进度条
+        
+        # Update progress bar every 100 iterations
+        if (i %% 100 == 0) incProgress(100/B) 
       }
     })
     
-    # 计算 P-value (Two-sided)
+    # Calculate Two-sided P-value
     p_val <- (1 + sum(abs(perm_stats) >= abs(obs_stat))) / (B + 1)
     
     return(list(obs = obs_stat, perms = perm_stats, p_val = p_val, data = df))
-  }, ignoreNULL = FALSE) # 启动时自动跑一次
+  }, ignoreNULL = FALSE) # Run automatically on startup
   
-  # 3. 输出 P-value 和结论
+  # 3. Output P-value and conclusion
   output$result_text <- renderUI({
     res <- perm_results()
     decision <- if(res$p_val < input$alpha) {
@@ -135,7 +143,7 @@ server <- function(input, output, session) {
     ))
   })
   
-  # 4. 输出置换分布图
+  # 4. Output Permutation Distribution Plot
   output$perm_plot <- renderPlot({
     req("Permutation Plot" %in% input$display)
     res <- perm_results()
@@ -151,7 +159,7 @@ server <- function(input, output, session) {
            caption = "Red dashed lines indicate the absolute observed statistic.")
   })
   
-  # 5. 输出 Summary Table
+  # 5. Output Summary Table
   output$summary_table <- renderTable({
     req("Summary Table" %in% input$display)
     df <- perm_results()$data
