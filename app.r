@@ -53,7 +53,7 @@ server <- function(input, output, session) {
     if (file.exists("exams.csv")) {
       df <- read.csv("exams.csv")
     } else {
-      # Generate mock data if the real dataset is not found
+      # Mock data fallback
       set.seed(42)
       df <- data.frame(
         patient_id = sample(1:500, 800, replace = TRUE),
@@ -63,9 +63,17 @@ server <- function(input, output, session) {
       )
     }
     
-    # Convert to numeric to prevent parsing issues
-    df$age <- as.numeric(df$age)
-    df$nn_predicted_age <- as.numeric(df$nn_predicted_age)
+    # Force convert age-related columns to numeric to prevent parsing issues
+    df$age <- as.numeric(as.character(df$age))
+    df$nn_predicted_age <- as.numeric(as.character(df$nn_predicted_age))
+    
+    # Force convert AF column to logical (TRUE/FALSE)
+    # Handles cases where CSV might contain 1/0 or "TRUE"/"FALSE" strings
+    if (is.numeric(df$AF) || all(na.omit(df$AF) %in% c(0, 1, "0", "1"))) {
+      df$AF <- as.logical(as.numeric(as.character(df$AF)))
+    } else {
+      df$AF <- as.logical(toupper(as.character(df$AF)))
+    }
     
     # Calculate Age Gap (g)
     df$g <- df$nn_predicted_age - df$age
@@ -77,16 +85,26 @@ server <- function(input, output, session) {
     if (input$data_handling == "One exam per patient (Random)") {
       df <- df %>% group_by(patient_id) %>% slice_sample(n = 1) %>% ungroup()
     } else {
-      # Keep the earliest record (assuming first row is earliest)
+      # Keep the earliest record
       df <- df %>% group_by(patient_id) %>% slice(1) %>% ungroup()
     }
+    
     return(df)
   })
   
-  # 2. Execute permutation test when the Run button is clicked
+  # 2. Execute permutation test
   perm_results <- eventReactive(input$run, {
     req(my_data())
     df <- my_data()
+    
+    # UI Smart Error Validation
+    # Displays clear error messages on the web page instead of crashing
+    validate(
+      need(nrow(df) > 0, "Error: Dataset is empty after removing NAs. Please check your 'age' and 'nn_predicted_age' columns."),
+      need(sum(df$AF == TRUE) > 0, "Error: No patients found with AF == TRUE in the dataset. Please check your 'AF' column format."),
+      need(sum(df$AF == FALSE) > 0, "Error: No patients found with AF == FALSE in the dataset.")
+    )
+    
     set.seed(input$seed)
     B <- as.numeric(input$B)
     
@@ -96,10 +114,10 @@ server <- function(input, output, session) {
     g_all <- df$g
     af_labels <- df$AF
     
-    # Function to calculate the observed statistic
+    # Function to calculate the observed statistic (with na.rm = TRUE for safety)
     calc_stat <- function(af, nonaf, type) {
-      if (type == "Mean Difference") return(mean(af) - mean(nonaf))
-      if (type == "Median Difference") return(median(af) - median(nonaf))
+      if (type == "Mean Difference") return(mean(af, na.rm = TRUE) - mean(nonaf, na.rm = TRUE))
+      if (type == "Median Difference") return(median(af, na.rm = TRUE) - median(nonaf, na.rm = TRUE))
       if (type == "Kolmogorov-Smirnov (KS)") {
         suppressWarnings(return(ks.test(af, nonaf)$statistic))
       }
@@ -116,21 +134,23 @@ server <- function(input, output, session) {
         sim_nonaf <- g_all[shuffled_labels == FALSE]
         perm_stats[i] <- calc_stat(sim_af, sim_nonaf, input$stat)
         
-        # Update progress bar every 100 iterations
+        # Update progress bar
         if (i %% 100 == 0) incProgress(100/B) 
       }
     })
     
     # Calculate Two-sided P-value
-    p_val <- (1 + sum(abs(perm_stats) >= abs(obs_stat))) / (B + 1)
+    p_val <- (1 + sum(abs(perm_stats) >= abs(obs_stat), na.rm = TRUE)) / (B + 1)
     
     return(list(obs = obs_stat, perms = perm_stats, p_val = p_val, data = df))
-  }, ignoreNULL = FALSE) # Run automatically on startup
+  }, ignoreNULL = FALSE)
   
   # 3. Output P-value and conclusion
   output$result_text <- renderUI({
     res <- perm_results()
-    decision <- if(res$p_val < input$alpha) {
+    decision <- if(is.na(res$p_val)) {
+      tags$span("Error computing P-value", style="color:red;")
+    } else if(res$p_val < input$alpha) {
       tags$span("REJECT the null hypothesis (Statistically Significant)", style="color:red; font-weight:bold;")
     } else {
       tags$span("FAIL TO REJECT the null hypothesis", style="color:green; font-weight:bold;")
@@ -168,9 +188,9 @@ server <- function(input, output, session) {
       group_by(AF) %>%
       summarise(
         N = n(),
-        Mean_AgeGap = mean(g),
-        Median_AgeGap = median(g),
-        SD_AgeGap = sd(g)
+        Mean_AgeGap = mean(g, na.rm = TRUE),
+        Median_AgeGap = median(g, na.rm = TRUE),
+        SD_AgeGap = sd(g, na.rm = TRUE)
       ) %>%
       rename(`Atrial Fibrillation (AF)` = AF)
   })
