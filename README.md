@@ -21,7 +21,11 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports:
     stats,
-    utils
+    utils,
+    shiny,
+    bslib,
+    dplyr,
+    ggplot2
 
 Suggests:
     knitr,
