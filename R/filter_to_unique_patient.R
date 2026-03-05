@@ -26,7 +26,7 @@
 filter_to_unique_patient <- function(df, method = "latest", seed = 6) {
 
   if (method == "latest") {
-    df  <- df[order(df$patient_id, df$exam_id, decreasing = c(FALSE, TRUE)), ]
+    df  <- df[order(df$patient_id, -df$exam_id)] #fixed
     df  <- df[!duplicated(df$patient_id), ]
   } else if (method == "random") {
     set.seed(seed)
