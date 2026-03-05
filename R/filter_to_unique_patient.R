@@ -24,9 +24,10 @@
 #' nrow(df_one) == length(unique(df$patient_id))
 #' @export
 filter_to_unique_patient <- function(df, method = "latest", seed = 6) {
-
   if (method == "latest") {
-    df  <- df[order(df$patient_id, -df$exam_id)] #fixed
+    df  <- df[order(df$patient_id, -df$exam_id), ] 
+    ## Anna: are you sure this was fixed?
+    ## I had to modify this to fix your code...
     df  <- df[!duplicated(df$patient_id), ]
   } else if (method == "random") {
     set.seed(seed)

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Permutation Testing for ECG Age Gap"
 output: rmarkdown::html_vignette
 vignette: >
