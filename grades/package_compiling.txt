@@ -1,0 +1,35 @@
+The last line was at 1:33am so unfortunately I will deduct 20% for lateness. (-0.4)
+
+Had the following errors (3) while processing your package, causing a deduction of (-0.9)
+
+ℹ Updating STA380project documentation
+Error: Empty lines found in DESCRIPTION file
+
+^This error was a massive concern as it's the firs thing that pops up when you do devtools::check()...
+
+Error in `(function (command = NULL, args = character(), error_on_status = TRUE, …`:
+! System command 'Rcmd.exe' failed
+---
+Exit status: 1
+stdout & stderr: <printed>
+---
+Type .Last.error to see the more details.
+
+To fix the above issue, I had to modify filter_to_unique_patient() (this appeared to be broken.)
+
+❯ checking R code for possible problems ... NOTE
+  plot_permutation_distribution: no visible global function definition
+    for 'hist'
+  plot_permutation_distribution: no visible global function definition
+    for 'abline'
+  Undefined global functions or variables:
+    abline hist
+  Consider adding
+    importFrom("graphics", "abline", "hist")
+  to your NAMESPACE file.
+
+Above is not something I tried fixing as it didn't break anything; however, you were supposed to resolve most errors, warnings, and notes.
+
+There is no sentence indicating your use of generative AI in your new vignette or lack thereof (-0.2)
+
+Grade: 0.5/2
