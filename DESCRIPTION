@@ -1,0 +1,12 @@
+Package: STA380project
+Title: ECG Age Gap Permutation Analysis
+Version: 0.1.0
+Authors@R: person("Yanming", "Zhao", email = "yanming.zhao@mail.utoronto.ca", role = c("aut", "cre"))
+Description: Permutation test analysis of ECG-derived age gaps from the CODE-15 percent dataset.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports:
+    stats,
+    utils
