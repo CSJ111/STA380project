@@ -6,6 +6,8 @@ library(testthat)
 #   - filter_to_unique_patient.R
 #   - compute_age_gap.R
 #   - run_permutation_test.R
+# Use AI to generate test cases
+# Functions name changed, some minor changes with AI
 # ============================================================
 
 # --- Source function files only if the functions are not already available ---
