@@ -162,7 +162,17 @@ if (requireNamespace("testthat", quietly = TRUE)) {
 }
 ```
 
-## 7. References (BibTeX)
+## 7. Generative AI Usage
+
+- The `@examples` sections in each R function file (`R/load_ecg_data.R`,
+  `R/filter_to_unique_patient.R`, `R/compute_age_gap.R`, `R/run_permutation_test.R`)
+  were generated with the assistance of generative AI (Claude) to replace
+  `\dontrun{}` with self-contained, runnable examples.
+- The `DESCRIPTION` file was generated with the assistance of generative AI (Claude).
+- The test cases in `Testthat_Functions.R` were generated with the assistance of
+  generative AI (Claude).
+
+## 8. References (BibTeX)
 
 ::: {#refs}
 :::
