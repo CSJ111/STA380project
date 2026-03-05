@@ -1,5 +1,11 @@
 # STA380project
 
+## Package Installation
+
+```{r}
+remotes::install_github("CSJ111/STA380project")
+```
+
 ## Installation Required Packages
 
 ```{r}
