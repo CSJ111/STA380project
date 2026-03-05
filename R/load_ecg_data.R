@@ -29,3 +29,7 @@ load_ecg_data <- function(path) {
   df <- df[, cols_needed]
   return(df)
 }
+
+# AI Usage: The @examples section was generated with the assistance of
+# generative AI (Claude) to replace \dontrun{} with self-contained,
+# runnable examples.

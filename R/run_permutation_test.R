@@ -81,3 +81,7 @@ run_permutation_test <- function(x, y,
     B       = B
   ))
 }
+
+# AI Usage: The @examples section was generated with the assistance of
+# generative AI (Claude) to replace \dontrun{} with self-contained,
+# runnable examples.

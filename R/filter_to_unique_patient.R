@@ -38,3 +38,7 @@ filter_to_unique_patient <- function(df, method = "latest", seed = 6) {
   rownames(df) <- NULL
   return(df)
 }
+
+# AI Usage: The @examples section was generated with the assistance of
+# generative AI (Claude) to replace \dontrun{} with self-contained,
+# runnable examples.
