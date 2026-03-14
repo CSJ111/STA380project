@@ -34,7 +34,8 @@ ui <- page_sidebar(
     ),
     card(
       card_header("Permutation Distribution"),
-      plotOutput("perm_plot")
+      plotOutput("perm_plot", height = "550px"),
+      full_screen = TRUE
     ),
     card(
       card_header("Group Summary Statistics & Data Flow"),
