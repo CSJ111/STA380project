@@ -12,7 +12,7 @@
   "packages": {
     "R6": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "R6",
         "Title": "Encapsulated Classes with Reference Semantics",
@@ -39,7 +39,7 @@
     },
     "RColorBrewer": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "RColorBrewer",
         "Version": "1.1-3",
@@ -60,7 +60,7 @@
     },
     "Rcpp": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "Rcpp",
         "Title": "Seamless R and C++ Integration",
@@ -90,7 +90,7 @@
     },
     "S7": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "S7",
         "Title": "An Object Oriented System Meant to Become a Successor to S3 and\nS4",
@@ -123,7 +123,7 @@
     },
     "base64enc": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "base64enc",
         "Version": "0.1-6",
@@ -147,7 +147,7 @@
     },
     "brio": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "brio",
         "Title": "Basic R Input Output",
@@ -180,9 +180,36 @@
         "RemoteSha": "1.1.5"
       }
     },
+    "bsicons": {
+      "Source": "CRAN",
+      "Repository": "https://cloud.r-project.org",
+      "description": {
+        "Package": "bsicons",
+        "Title": "Easily Work with 'Bootstrap' Icons",
+        "Version": "0.1.2",
+        "Authors@R": "c(\n    person(\"Carson\", \"Sievert\", , \"carson@posit.co\", role = c(\"cre\", \"aut\"),\n           comment = c(ORCID = \"0000-0002-4958-2844\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(\"Mark\", \"Otto\", role = \"cph\",\n           comment = \"Bootstrap icons maintainer\")\n  )",
+        "Description": "Easily use 'Bootstrap' icons inside 'Shiny' apps and 'R\n    Markdown' documents. More generally, icons can be inserted in any\n    'htmltools' document through inline 'SVG'.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/rstudio/bsicons",
+        "BugReports": "https://github.com/rstudio/bsicons/issues",
+        "Depends": "R (>= 2.10)",
+        "Imports": "cli, htmltools, rlang, utils",
+        "Suggests": "bslib, processx, testthat, webshot2, withr",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-11-03 23:29:00 UTC; cpsievert",
+        "Author": "Carson Sievert [cre, aut] (<https://orcid.org/0000-0002-4958-2844>),\n  Posit Software, PBC [cph, fnd],\n  Mark Otto [cph] (Bootstrap icons maintainer)",
+        "Maintainer": "Carson Sievert <carson@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-11-04 00:30:05 UTC",
+        "Built": "R 4.5.2; ; 2026-03-06 11:50:34 UTC; windows"
+      }
+    },
     "bslib": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "bslib",
         "Title": "Custom 'Bootstrap' 'Sass' Themes for 'shiny' and 'rmarkdown'",
@@ -215,7 +242,7 @@
     },
     "cachem": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "cachem",
         "Version": "1.1.0",
@@ -243,7 +270,7 @@
     },
     "callr": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "callr",
         "Title": "Call R from R",
@@ -272,7 +299,7 @@
     },
     "cli": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "cli",
         "Title": "Helpers for Developing Command Line Interfaces",
@@ -301,7 +328,7 @@
     },
     "commonmark": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "commonmark",
         "Type": "Package",
@@ -328,7 +355,7 @@
     },
     "cpp11": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "cpp11",
         "Title": "A C++11 Interface for R's C Interface",
@@ -357,7 +384,7 @@
     },
     "crayon": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "crayon",
         "Title": "Colored Terminal Output",
@@ -391,7 +418,7 @@
     },
     "desc": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "desc",
         "Title": "Manipulate DESCRIPTION Files",
@@ -421,7 +448,7 @@
     },
     "diffobj": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "diffobj",
         "Type": "Package",
@@ -458,7 +485,7 @@
     },
     "digest": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "digest",
         "Authors@R": "c(person(\"Dirk\", \"Eddelbuettel\", role = c(\"aut\", \"cre\"), email = \"edd@debian.org\",\n                    comment = c(ORCID = \"0000-0001-6419-907X\")),\n             person(\"Antoine\", \"Lucas\", role=\"ctb\", comment = c(ORCID = \"0000-0002-8059-9767\")),\n             person(\"Jarek\", \"Tuszynski\", role=\"ctb\"),\n             person(\"Henrik\", \"Bengtsson\", role=\"ctb\", comment = c(ORCID = \"0000-0002-7579-5165\")),\n             person(\"Simon\", \"Urbanek\", role=\"ctb\", comment = c(ORCID = \"0000-0003-2297-1732\")),\n             person(\"Mario\", \"Frasca\", role=\"ctb\"),\n             person(\"Bryan\", \"Lewis\", role=\"ctb\"),\n             person(\"Murray\", \"Stokely\", role=\"ctb\"),\n             person(\"Hannes\", \"Muehleisen\", role=\"ctb\", comment = c(ORCID = \"0000-0001-8552-0029\")),\n             person(\"Duncan\", \"Murdoch\", role=\"ctb\"),\n             person(\"Jim\", \"Hester\", role=\"ctb\", comment = c(ORCID = \"0000-0002-2739-7082\")),\n             person(\"Wush\", \"Wu\", role=\"ctb\", comment = c(ORCID = \"0000-0001-5180-0567\")),\n             person(\"Qiang\", \"Kou\", role=\"ctb\", comment = c(ORCID = \"0000-0001-6786-5453\")),\n             person(\"Thierry\", \"Onkelinx\", role=\"ctb\", comment = c(ORCID = \"0000-0001-8804-4216\")),\n             person(\"Michel\", \"Lang\", role=\"ctb\", comment = c(ORCID = \"0000-0001-9754-0393\")),\n             person(\"Viliam\", \"Simko\", role=\"ctb\"),\n             person(\"Kurt\", \"Hornik\", role=\"ctb\", comment = c(ORCID = \"0000-0003-4198-9911\")),\n             person(\"Radford\", \"Neal\", role=\"ctb\", comment = c(ORCID = \"0000-0002-2473-3407\")),\n             person(\"Kendon\", \"Bell\", role=\"ctb\", comment = c(ORCID = \"0000-0002-9093-8312\")),\n             person(\"Matthew\", \"de Queljoe\", role=\"ctb\"),\n             person(\"Dmitry\", \"Selivanov\", role=\"ctb\", comment = c(ORCID = \"0000-0003-0492-6647\")),\n             person(\"Ion\", \"Suruceanu\", role=\"ctb\", comment = c(ORCID = \"0009-0005-6446-4909\")),\n             person(\"Bill\", \"Denney\", role=\"ctb\", comment = c(ORCID = \"0000-0002-5759-428X\")),\n             person(\"Dirk\", \"Schumacher\", role=\"ctb\"),\n             person(\"András\", \"Svraka\", role=\"ctb\", comment = c(ORCID = \"0009-0008-8480-1329\")),\n             person(\"Sergey\", \"Fedorov\", role=\"ctb\", comment = c(ORCID = \"0000-0002-5970-7233\")),\n             person(\"Will\", \"Landau\", role=\"ctb\", comment = c(ORCID = \"0000-0003-1878-3253\")),\n             person(\"Floris\", \"Vanderhaeghe\", role=\"ctb\", comment = c(ORCID = \"0000-0002-6378-6229\")),\n             person(\"Kevin\", \"Tappe\", role=\"ctb\"),\n             person(\"Harris\", \"McGehee\", role=\"ctb\"),\n             person(\"Tim\", \"Mastny\", role=\"ctb\"),\n             person(\"Aaron\", \"Peikert\", role=\"ctb\", comment = c(ORCID = \"0000-0001-7813-818X\")),\n             person(\"Mark\", \"van der Loo\", role=\"ctb\", comment = c(ORCID = \"0000-0002-9807-4686\")),\n             person(\"Chris\", \"Muir\", role=\"ctb\", comment = c(ORCID = \"0000-0003-2555-3878\")),\n             person(\"Moritz\", \"Beller\", role=\"ctb\", comment = c(ORCID = \"0000-0003-4852-0526\")),\n             person(\"Sebastian\", \"Campbell\", role=\"ctb\", comment = c(ORCID = \"0009-0000-5948-4503\")),\n             person(\"Winston\", \"Chang\", role=\"ctb\", comment = c(ORCID = \"0000-0002-1576-2126\")),\n             person(\"Dean\", \"Attali\", role=\"ctb\", comment = c(ORCID = \"0000-0002-5645-3493\")),\n             person(\"Michael\", \"Chirico\", role=\"ctb\", comment = c(ORCID = \"0000-0003-0787-087X\")),\n             person(\"Kevin\", \"Ushey\", role=\"ctb\", comment = c(ORCID = \"0000-0003-2880-7407\")),\n             person(\"Carl\", \"Pearson\", role=\"ctb\", comment = c(ORCID = \"0000-0003-0701-7860\")))",
@@ -486,7 +513,7 @@
     },
     "dplyr": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "dplyr",
@@ -519,7 +546,7 @@
     },
     "evaluate": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "evaluate",
@@ -547,7 +574,7 @@
     },
     "farver": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "farver",
@@ -574,7 +601,7 @@
     },
     "fastmap": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "fastmap",
         "Title": "Fast Data Structures",
@@ -599,7 +626,7 @@
     },
     "fontawesome": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "fontawesome",
@@ -628,7 +655,7 @@
     },
     "fs": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "fs",
         "Title": "Cross-Platform File System Operations Based on 'libuv'",
@@ -662,7 +689,7 @@
     },
     "generics": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "generics",
         "Title": "Common S3 Generics not Provided by Base R Methods Related to\nModel Fitting",
@@ -690,7 +717,7 @@
     },
     "ggplot2": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "ggplot2",
         "Title": "Create Elegant Data Visualisations Using the Grammar of Graphics",
@@ -723,7 +750,7 @@
     },
     "glue": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "glue",
         "Title": "Interpreted String Literals",
@@ -754,7 +781,7 @@
     },
     "gtable": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "gtable",
         "Title": "Arrange 'Grobs' in Tables",
@@ -784,7 +811,7 @@
     },
     "highr": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "highr",
         "Type": "Package",
@@ -812,7 +839,7 @@
     },
     "htmltools": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "htmltools",
@@ -844,7 +871,7 @@
     },
     "httpuv": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "httpuv",
@@ -875,7 +902,7 @@
     },
     "isoband": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "isoband",
         "Title": "Generate Isolines and Isobands from Regularly Spaced Elevation\nGrids",
@@ -907,7 +934,7 @@
     },
     "jquerylib": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "jquerylib",
         "Title": "Obtain 'jQuery' as an HTML Dependency Object",
@@ -931,7 +958,7 @@
     },
     "jsonlite": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "jsonlite",
         "Version": "2.0.0",
@@ -958,7 +985,7 @@
     },
     "knitr": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "knitr",
         "Type": "Package",
@@ -988,7 +1015,7 @@
     },
     "labeling": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "labeling",
         "Type": "Package",
@@ -1010,7 +1037,7 @@
     },
     "later": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "later",
@@ -1044,7 +1071,7 @@
     },
     "lifecycle": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "lifecycle",
         "Title": "Manage the Life Cycle of your Package Functions",
@@ -1073,7 +1100,7 @@
     },
     "magrittr": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "magrittr",
@@ -1103,7 +1130,7 @@
     },
     "memoise": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "memoise",
         "Title": "'Memoisation' of Functions",
@@ -1128,7 +1155,7 @@
     },
     "mime": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "mime",
         "Type": "Package",
@@ -1154,7 +1181,7 @@
     },
     "otel": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "otel",
         "Title": "OpenTelemetry R API",
@@ -1182,7 +1209,7 @@
     },
     "pillar": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "pillar",
         "Title": "Coloured Formatting for Columns",
@@ -1215,7 +1242,7 @@
     },
     "pkgbuild": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "pkgbuild",
         "Title": "Find Tools Needed to Build R Packages",
@@ -1244,7 +1271,7 @@
     },
     "pkgconfig": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "pkgconfig",
         "Title": "Private Configuration for 'R' Packages",
@@ -1268,7 +1295,7 @@
     },
     "pkgload": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "pkgload",
         "Title": "Simulate Package Installation and Attach",
@@ -1298,7 +1325,7 @@
     },
     "praise": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "praise",
         "Title": "Praise Users",
@@ -1328,7 +1355,7 @@
     },
     "processx": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "processx",
         "Title": "Execute and Control System Processes",
@@ -1357,7 +1384,7 @@
     },
     "promises": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "promises",
@@ -1389,7 +1416,7 @@
     },
     "ps": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "ps",
         "Title": "List, Query, Manipulate System Processes",
@@ -1419,7 +1446,7 @@
     },
     "rappdirs": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "rappdirs",
@@ -1450,7 +1477,7 @@
     },
     "rlang": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "rlang",
         "Version": "1.1.7",
@@ -1483,7 +1510,7 @@
     },
     "rmarkdown": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "rmarkdown",
@@ -1521,7 +1548,7 @@
     },
     "rprojroot": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "rprojroot",
         "Title": "Finding Files in Project Subdirectories",
@@ -1551,7 +1578,7 @@
     },
     "sass": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "sass",
@@ -1581,7 +1608,7 @@
     },
     "scales": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "scales",
         "Title": "Scale Functions for Visualization",
@@ -1611,7 +1638,7 @@
     },
     "shiny": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "shiny",
@@ -1641,7 +1668,7 @@
     },
     "sourcetools": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "sourcetools",
         "Type": "Package",
@@ -1666,7 +1693,7 @@
     },
     "testthat": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "testthat",
         "Title": "Unit Testing for R",
@@ -1705,7 +1732,7 @@
     },
     "tibble": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "tibble",
         "Title": "Simple Data Frames",
@@ -1741,7 +1768,7 @@
     },
     "tidyselect": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "tidyselect",
         "Title": "Select from a Set of Strings",
@@ -1771,7 +1798,7 @@
     },
     "tinytex": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "tinytex",
         "Type": "Package",
@@ -1804,7 +1831,7 @@
     },
     "utf8": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "utf8",
         "Title": "Unicode Text Processing",
@@ -1832,7 +1859,7 @@
     },
     "vctrs": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "vctrs",
         "Title": "Vector Helpers",
@@ -1865,7 +1892,7 @@
     },
     "viridisLite": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "viridisLite",
         "Type": "Package",
@@ -1892,7 +1919,7 @@
     },
     "waldo": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "waldo",
         "Title": "Find Differences Between R Objects",
@@ -1927,7 +1954,7 @@
     },
     "withr": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "withr",
         "Title": "Run Code 'With' Temporarily Modified Global State",
@@ -1957,7 +1984,7 @@
     },
     "xfun": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "xfun",
         "Type": "Package",
@@ -1986,7 +2013,7 @@
     },
     "xtable": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Package": "xtable",
         "Version": "1.8-8",
@@ -2011,7 +2038,7 @@
     },
     "yaml": {
       "Source": "CRAN",
-      "Repository": "https://mirror.csclub.uwaterloo.ca/CRAN",
+      "Repository": "https://cloud.r-project.org",
       "description": {
         "Type": "Package",
         "Package": "yaml",
@@ -2044,7 +2071,13 @@
       "checksum": "47ddaef183aa31d7dce77e0b302dd089"
     },
     "app.R": {
-      "checksum": "210aafd4f41ffc2045adcfd6c712527a"
+      "checksum": "149f366dde1433a92b6bcc9cc60675ef"
+    },
+    "app/aistatement.md": {
+      "checksum": "104d987da5b041b384c97bc69531fe27"
+    },
+    "app/app.R": {
+      "checksum": "149f366dde1433a92b6bcc9cc60675ef"
     },
     "BasicImplementCheck/AIstatement.txt": {
       "checksum": "f2d20f6a69531760a4f00f791edb05c5"
@@ -2155,10 +2188,7 @@
       "checksum": "18823501b2553b4b38550055fc846660"
     },
     "README.md": {
-      "checksum": "7ef230f75eecc809efabc99f28e815ed"
-    },
-    "shiny.R": {
-      "checksum": "210aafd4f41ffc2045adcfd6c712527a"
+      "checksum": "621c89db57b128d851435dacb3dc07ad"
     },
     "STA380GroupForm.xlsx": {
       "checksum": "f75a4ed576d2ddee1235de00809d0f71"
