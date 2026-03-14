@@ -28,7 +28,6 @@ ui <- page_sidebar(
     actionButton("run", "Run Permutation Test", class = "btn-primary")
   ),
   
-  # --- Main Panel: Output Results (直接堆叠卡片，自动流式排版不重叠) ---
   
   card(
     card_header("Test Results & Effect Size"),
@@ -37,8 +36,7 @@ ui <- page_sidebar(
   
   card(
     card_header("Permutation Distribution"),
-    # 直接在这里设置你需要的高度，卡片会自动被撑大！
-    plotOutput("perm_plot", height = "800px"),
+    plotOutput("perm_plot", height = "600px"),
     full_screen = TRUE
   ),
   
