@@ -143,10 +143,16 @@ server <- function(input, output, session) {
     p_val <- (1 + sum(abs(perm_stats) >= abs(obs_stat), na.rm = TRUE)) / (B + 1)
     
     return(list(obs = obs_stat, perms = perm_stats, p_val = p_val, data = df))
-  }, ignoreNULL = FALSE)
+  })
   
   # 3. Output P-value and conclusion
+  # 3. Output P-value and conclusion
   output$result_text <- renderUI({
+    # 如果按钮还没被点击过 (值为 0)，显示提示语
+    if (input$run == 0) {
+      return(HTML("<p style='color: gray; font-style: italic;'>Please click <strong>'Run Permutation Test'</strong> in the sidebar to view the results.</p>"))
+    }
+    
     res <- perm_results()
     decision <- if(is.na(res$p_val)) {
       tags$span("Error computing P-value", style="color:red;")
