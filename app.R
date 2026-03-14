@@ -5,10 +5,12 @@ library(dplyr)
 library(ggplot2)
 
 # --- UI Definition ---
+# --- UI Definition ---
 ui <- page_sidebar(
   title = "STA380 Project: Permutation Test on ECG Age Gap",
   theme = bs_theme(version = 5, bootswatch = "flatly"),
   
+  # Sidebar: Input Controls
   sidebar = sidebar(
     numericInput("seed", "1. Random Seed", value = 123),
     selectInput("B", "2. Number of Permutations (B)", 
@@ -26,24 +28,27 @@ ui <- page_sidebar(
     actionButton("run", "Run Permutation Test", class = "btn-primary")
   ),
   
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_header("Test Results & Effect Size"),
-      uiOutput("result_text")
-    ),
-    card(
-      card_header("Permutation Distribution"),
-      plotOutput("perm_plot", height = "700px"),
-      full_screen = TRUE
-    ),
-    card(
-      card_header("Group Summary Statistics & Data Flow"),
-      tableOutput("summary_table"),
-      uiOutput("data_flow_text")
-    ),
-    uiOutput("caveats_panel")
-  )
+  # --- Main Panel: Output Results (直接堆叠卡片，自动流式排版不重叠) ---
+  
+  card(
+    card_header("Test Results & Effect Size"),
+    uiOutput("result_text")
+  ),
+  
+  card(
+    card_header("Permutation Distribution"),
+    # 直接在这里设置你需要的高度，卡片会自动被撑大！
+    plotOutput("perm_plot", height = "800px"),
+    full_screen = TRUE
+  ),
+  
+  card(
+    card_header("Group Summary Statistics & Data Flow"),
+    tableOutput("summary_table"),
+    uiOutput("data_flow_text")
+  ),
+  
+  uiOutput("caveats_panel")
 )
 
 # --- Server Logic ---
