@@ -6,7 +6,7 @@ library(ggplot2)
 
 # --- UI Definition ---
 ui <- page_sidebar(
-  title = "STA380 Project: Permutation Test on ECG Age Gap",
+  title = "STA380 Project: Permutation Test on ECG Age Gap (by Group GG Bond)",
   theme = bs_theme(version = 5, bootswatch = "flatly"),
   
   # Sidebar: Input Controls
