@@ -31,7 +31,8 @@ ui <- page_sidebar(
     nav_panel("1. Project Intro & Data", 
       card(
         card_header("Project Background & Objectives"),
-        markdown("
+        # ！！！在这里加了 withMathJax() ！！！
+        withMathJax(markdown("
         #### Dataset Description
         This application utilizes the publicly available **CODE-15% ECG dataset** (Zenodo record 4916206). It consists of large-scale clinical electrocardiograms (ECGs) along with corresponding metadata.
         
@@ -41,15 +42,17 @@ ui <- page_sidebar(
         * `nn_predicted_age`: An 'ECG age' derived from a deep neural network analyzing the patient's heart signals.
         
         #### What We Are Analyzing
-        We define our continuous outcome variable as the Age Gap ($g$):
-        \\[ g = \\text{nn\\_predicted\\_age} - \\text{age} \\]
+        We define our continuous outcome variable as the **Age Gap** (\\(g\\)):
+        
+        $$ g = \\text{nn\\_predicted\\_age} - \\text{age} $$
+        
         A positive Age Gap suggests that the physiological ECG age appears older than the patient's actual age.
         
         #### General Goal of This Application
         The objective of this app is to perform a **two-sample Permutation Test** to evaluate whether the *entire distribution* of the Age Gap is identical between patients with Atrial Fibrillation (AF) and those without (non-AF). 
         
-        Instead of merely comparing the means (which could be done with a simple t-test), we compute the **Kolmogorov-Smirnov (KS) statistic** entirely from scratch. The app randomly shuffles the group labels $B$ times to construct an empirical null distribution, calculating a reliable p-value to test the exchangeability of the two groups.
-        ")
+        Instead of merely comparing the means (which could be done with a simple t-test), we compute the **Kolmogorov-Smirnov (KS) statistic** entirely from scratch. The app randomly shuffles the group labels \\(B\\) times to construct an empirical null distribution, calculating a reliable p-value to test the exchangeability of the two groups.
+        "))
       )
     ),
     
