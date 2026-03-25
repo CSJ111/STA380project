@@ -29,7 +29,7 @@ a **two-sample permutation test** comparing participants with atrial fibrillatio
 g = \texttt{nn\_predicted\_age} - \texttt{age}.
 \]
 
-The goal is to test whether the distribution of \( g \) differs between AF and non-AF groups using a nonparametric permutation procedure.
+The goal is to test whether the distribution of \( g \) differs between AF and non-AF groups using a nonparametric permutation procedure, following the randomization-testing framework of Fisher.
 
 ## 2. Functions Implemented
 
@@ -162,18 +162,15 @@ if (requireNamespace("testthat", quietly = TRUE)) {
 }
 ```
 
-## 7. Generative AI Usage
+## 7. References (BibTeX)
 
-- The `@examples` sections in each R function file (`R/load_ecg_data.R`,
-  `R/filter_to_unique_patient.R`, `R/compute_age_gap.R`, `R/run_permutation_test.R`)
-  were generated with the assistance of generative AI (Claude) to replace
-  `\dontrun{}` with self-contained, runnable examples.
-- The `DESCRIPTION` file was generated with the assistance of generative AI (Claude).
-- The test cases in `Testthat_Functions.R` were generated with the assistance of
-  generative AI (Claude).
-
-## 8. References (BibTeX)
-
-::: {#refs}
-:::
-
+```bibtex
+@dataset{ribeiro_2021_code15,
+  author    = {Ribeiro, A. H. and Ribeiro, M. H. and Paixao, G. M. M. and others},
+  title     = {CODE-15\%: A Large-Scale Electrocardiogram Dataset for Deep Learning},
+  year      = {2021},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.4916206},
+  url       = {https://doi.org/10.5281/zenodo.4916206}
+}
+```
