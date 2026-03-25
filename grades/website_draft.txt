@@ -1,0 +1,48 @@
+General comments:
+
+I think the website output is generally good.
+
+Few things:
+
+I don't really see any generative AI statements in any updated vignettes regarding R-shiny use, so unfortunately I'm going to need to deduct for that (-0.1)
+
+In the title it states,
+"(Please wait for the app after clicking 'Run Permutation Test' as it may take some time to compute the results!)"
+
+I would personally add this somewhere else (subtitle maybe?) just because it really isn't the title of the project.
+
+I think some of the outputs, like the "Permutation Distribution" and the "Group Summary Statistics & Data Flow" are too thin.
+You should ideally expand this. If the issue is scrolling around the site, it would be good to have a toggle such that some limited outputs are out at different points in time.
+
+I think in the website you should include a good description of the dataset, what you're trying to analyze, and the general goal of the website.
+
+One thing I unfortunately didn't catch earlier:
+
+The first two here aren't actually test statistics:
+calc_stat <- function(a, b) {
+    if (stat == "mean")   return(mean(a)   - mean(b))
+    if (stat == "median") return(median(a) - median(b))
+    if (stat == "ks")     return(ks.test(a, b)$statistic)
+  }
+
+In particular, the stat == "mean" and the stat == "median" are indeed statistics, but they shouldn't be used for a permutation test (it is not a valid test statistic; at least I don't see any indication in the p-value calculation that you have properly solved for this). This is because if you want to compute the p-value, this is sensitive to the actual distribution of `mean(a)   - mean(b)` and `median(a) - median(b)`. As in, you'd need to actually solve for the distribution of those. A permutation test isn't necessarily used to solve for the differences of means -- they are used to evaluate distributions. Otherwise, you would just do a two-sample t-test.
+
+So in general, what you currently have is not valid. You can quickly solve this issue by just removing the options of stat == "mean" and stat == "median", and just do the KS test (as intended).
+
+Another thing to note is that I don't really want students to use 
+"ks.test(a, b)$statistic"
+because the main goal is for students to learn how actually the KS test actually works as opposed to just use pre-built in functions in R. 
+
+Actually, if you were to use "ks.test(a, b)$statistic", you might as well even make the calculation easier because you could've done,
+"ks.test(a, b)$p.value" and directly get the p-value. So, I would prefer if you hard coded this in a way similar to how I coded this in lectures without the use of other functions.
+
+User-upload specific problems:
+
+The last person making commits was Aaron, and I saw that they made contributions without being Linkedin to their GitHub account.
+
+This is an issue as if you have a GitHub account and you show off to employers, they will be unable to adequately trace back to your commits (and is just harder for me to see.) Please for the final changes, try to link up.
+
+I am also concerned that it appears to me that Leo60032 is making a lot of GitHub contributions, yet this student wasn't reported. Did you externally get someone else to work on your project?? Why would someone have multiple accounts for this group project?? D
+
+
+
