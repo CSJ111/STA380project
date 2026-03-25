@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 )
 source("functions.R")
 ```
+
 ## 1. Overview
 
 This package implements the core workflow for our project:
@@ -30,6 +31,7 @@ g = \texttt{nn\_predicted\_age} - \texttt{age}.
 \]
 
 The goal is to test whether the distribution of \( g \) differs between AF and non-AF groups using a nonparametric permutation procedure, following the randomization-testing framework of Fisher.
+
 
 ## 2. Functions Implemented
 
@@ -78,6 +80,7 @@ df <- data.frame(
 
 head(df)
 ```
+
 ### 3.1 Keep One Exam per Patient
 
 Because some patients have multiple exams, we demonstrate both supported methods:
@@ -91,12 +94,16 @@ df_random <- filter_to_unique_patient(df, method = "random", seed = 99)
 nrow(df_latest)
 length(unique(df$patient_id))
 ```
+
 ### 3.2 Compute Age Gap
+
 ```{r compute-age-gap}
 df_latest <- compute_age_gap(df_latest)
 summary(df_latest$age_gap)
 ```
+
 ### 3.3 Run Permutation Test
+
 We form two samples:
 - Group 1: AF == TRUE
 - Group 2: AF == FALSE
@@ -114,7 +121,9 @@ res_mean$p_value
 res_median$p_value
 res_ks$p_value
 ```
+
 ## 4. Graphs: permutation distribution
+
 A required output is the permutation distribution plot with a vertical line at the observed statistic.
 ```{r permutation-plot}
 hist(res_mean$t_perm, breaks = 30,
@@ -122,6 +131,7 @@ hist(res_mean$t_perm, breaks = 30,
      xlab = "Permuted statistics")
 abline(v = res_mean$t_obs, lwd = 2)
 ```
+
 
 ## 5. Brief Assumption / Caveat Check
 
@@ -162,6 +172,7 @@ if (requireNamespace("testthat", quietly = TRUE)) {
 }
 ```
 
+
 ## 7. References (BibTeX)
 
 ```bibtex
@@ -174,3 +185,5 @@ if (requireNamespace("testthat", quietly = TRUE)) {
   url       = {https://doi.org/10.5281/zenodo.4916206}
 }
 ```
+
+
