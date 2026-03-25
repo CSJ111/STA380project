@@ -5,7 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Permutation Testing for ECG Age Gap}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: vignettes/bibliography.bib
+bibliography: bibliography.bib
 ---
 
 ```{r setup, include=FALSE}
