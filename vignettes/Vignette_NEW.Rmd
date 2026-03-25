@@ -142,9 +142,17 @@ measures model or subject-level resampling scheme would be more appropriate than
 this default workflow.
 
 
+## Generative AI Usage Statement
+
+Throughout this project, generative AI tools (ChatGPT and Claude) were used to:
+
+- Polish written explanations and documentation.
+- Generate and debug R code, including Roxygen `@examples` sections and Shiny UI/server logic.
+- Assist with structuring the vignette and resolving `devtools::check()` issues.
+
+
 ## References
 
 <div id="refs"></div>
-
 
 

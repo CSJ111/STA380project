@@ -8,3 +8,7 @@
 ^\.Rhistory$
 ^doc$
 ^Meta$
+^\.claude-monitor$
+^aistatement\.md$
+^exams\.csv$
+^manifest\.json$

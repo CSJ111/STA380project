@@ -1,2 +1,5 @@
 /doc/
 /Meta/
+
+# Claude Token Monitor data
+.claude-monitor/

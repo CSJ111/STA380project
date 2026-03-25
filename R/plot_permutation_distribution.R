@@ -11,6 +11,7 @@
 #' set.seed(1)
 #' vals <- rnorm(1000)
 #' plot_permutation_distribution(vals, t_obs = 0.8)
+#' @importFrom graphics hist abline
 #' @export
 plot_permutation_distribution <- function(t_perm, t_obs, breaks = 30) {
   hist(
