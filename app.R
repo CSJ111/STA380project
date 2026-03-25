@@ -5,9 +5,8 @@ library(dplyr)
 library(ggplot2)
 
 # --- UI Definition ---
-# --- UI Definition ---
 ui <- page_sidebar(
-  title = "STA380 Project: Permutation Test on ECG Age Gap (Please wait for the app after clicking 'Run Permutation Test' as it may take some time to compute the results!)",
+  title = "STA380 Project: Permutation Test on ECG Age Gap",
   theme = bs_theme(version = 5, bootswatch = "flatly"),
   
   # Sidebar: Input Controls
@@ -17,36 +16,75 @@ ui <- page_sidebar(
                 choices = c(500, 1000, 5000), selected = 1000),
     sliderInput("alpha", "3. Significance Level (\u03B1)", 
                 min = 0.01, max = 0.10, value = 0.05, step = 0.01),
-    selectInput("stat", "4. Test Statistic", 
-                choices = c("Mean Difference", "Median Difference", "Kolmogorov-Smirnov (KS)")),
-    selectInput("data_handling", "5. Repeated Exams Handling", 
+    selectInput("data_handling", "4. Repeated Exams Handling", 
                 choices = c("One exam per patient (Random)", "One exam per patient (Earliest)")),
-    checkboxGroupInput("display", "6. Display Options", 
-                       choices = c("Permutation Plot", "Summary Table", "Caveats & Assumptions"), 
-                       selected = c("Permutation Plot", "Summary Table", "Caveats & Assumptions")),
     hr(),
-    actionButton("run", "Run Permutation Test", class = "btn-primary")
+    actionButton("run", "Run Permutation Test", class = "btn-primary"),
+    # Moved the warning out of the main title to a subtle help text here
+    helpText("Note: Computations may take a moment depending on the number of permutations (B).")
   ),
   
-  
-  card(
-    card_header("Test Results & Effect Size"),
-    uiOutput("result_text")
-  ),
-  
-  card(
-    card_header("Permutation Distribution"),
-    plotOutput("perm_plot", height = "600px"),
-    full_screen = TRUE
-  ),
-  
-  card(
-    card_header("Group Summary Statistics & Data Flow"),
-    tableOutput("summary_table"),
-    uiOutput("data_flow_text")
-  ),
-  
-  uiOutput("caveats_panel")
+  # Main Panel: Tabbed Layout to solve scrolling/thinness issues
+  navset_card_underline(
+    
+    # --- Tab 1: Project Description ---
+    nav_panel("1. Project Intro & Data", 
+      card(
+        card_header("Project Background & Objectives"),
+        markdown("
+        #### Dataset Description
+        This application utilizes the publicly available **CODE-15% ECG dataset** (Zenodo record 4916206). It consists of large-scale clinical electrocardiograms (ECGs) along with corresponding metadata.
+        
+        From the patient metadata, we primarily focus on:
+        * `AF`: A binary label indicating the presence of Atrial Fibrillation.
+        * `age`: The chronological age of the patient.
+        * `nn_predicted_age`: An 'ECG age' derived from a deep neural network analyzing the patient's heart signals.
+        
+        #### What We Are Analyzing
+        We define our continuous outcome variable as the Age Gap ($g$):
+        \\[ g = \\text{nn\\_predicted\\_age} - \\text{age} \\]
+        A positive Age Gap suggests that the physiological ECG age appears older than the patient's actual age.
+        
+        #### General Goal of This Application
+        The objective of this app is to perform a **two-sample Permutation Test** to evaluate whether the *entire distribution* of the Age Gap is identical between patients with Atrial Fibrillation (AF) and those without (non-AF). 
+        
+        Instead of merely comparing the means (which could be done with a simple t-test), we compute the **Kolmogorov-Smirnov (KS) statistic** entirely from scratch. The app randomly shuffles the group labels $B$ times to construct an empirical null distribution, calculating a reliable p-value to test the exchangeability of the two groups.
+        ")
+      )
+    ),
+    
+    # --- Tab 2: Main Results & Plot ---
+    nav_panel("2. Permutation Results",
+      card(
+        card_header("Test Conclusion & Statistics"),
+        uiOutput("result_text")
+      ),
+      card(
+        card_header("Permutation Null Distribution (KS Statistic)"),
+        plotOutput("perm_plot", height = "500px"),
+        full_screen = TRUE
+      )
+    ),
+    
+    # --- Tab 3: Summary Statistics & Flow ---
+    nav_panel("3. Group Summary Statistics",
+      card(
+        card_header("Observed Data Summary"),
+        tableOutput("summary_table"),
+        uiOutput("data_flow_text")
+      ),
+      card(
+        card_header("Statistical Caveats & Assumptions"),
+        HTML("
+          <ul>
+            <li><strong>Independence:</strong> We restrict the dataset to one exam per patient before permutation to satisfy the independence assumption of the test.</li>
+            <li><strong>KS Statistic:</strong> We use the maximum absolute difference between the empirical cumulative distribution functions (ECDFs) of the two groups.</li>
+            <li><strong>Interpretation of P-value:</strong> The p-value is a Monte Carlo estimate. It will fluctuate slightly if you change the random seed or the number of permutations (B).</li>
+          </ul>
+        ")
+      )
+    )
+  )
 )
 
 # --- Server Logic ---
@@ -54,7 +92,6 @@ server <- function(input, output, session) {
   
   # 1. Data Processing Pipeline
   my_data <- reactive({
-    # CRITICAL FIX 1: Set seed HERE so that patient-level random sampling is reproducible
     set.seed(input$seed)
     
     if (file.exists("exams.csv")) {
@@ -71,7 +108,6 @@ server <- function(input, output, session) {
     
     raw_n <- nrow(df)
     
-    # Force convert types
     df$age <- as.numeric(as.character(df$age))
     df$nn_predicted_age <- as.numeric(as.character(df$nn_predicted_age))
     
@@ -81,14 +117,10 @@ server <- function(input, output, session) {
       df$AF <- as.logical(toupper(as.character(df$AF)))
     }
     
-    # 2. compute_age_gap logic
     df$g <- df$nn_predicted_age - df$age
-    
-    # Filter NAs
     df_clean <- df[!is.na(df$g) & !is.na(df$AF), ]
     removed_na <- raw_n - nrow(df_clean)
     
-    # 3. filter_to_unique_patient logic (CRITICAL: Done BEFORE permutation)
     if (input$data_handling == "One exam per patient (Random)") {
       df_final <- df_clean %>% group_by(patient_id) %>% slice_sample(n = 1) %>% ungroup()
     } else {
@@ -99,7 +131,7 @@ server <- function(input, output, session) {
     return(list(data = df_final, raw_n = raw_n, removed_na = removed_na, removed_dups = removed_dups))
   })
   
-  # 4. Permutation Engine
+  # 2. Permutation Engine (HARDCODED KS STATISTIC)
   perm_results <- eventReactive(input$run, {
     dataset <- my_data()
     df <- dataset$data
@@ -110,56 +142,58 @@ server <- function(input, output, session) {
       need(sum(df$AF == FALSE) > 0, "Error: No AF==FALSE patients found.")
     )
     
-    set.seed(input$seed) # Set seed again for the permutation shuffling
+    set.seed(input$seed) 
     B <- as.numeric(input$B)
     
-    g_af <- df$g[df$AF == TRUE]
-    g_nonaf <- df$g[df$AF == FALSE]
-    g_all <- df$g
     af_labels <- df$AF
+    n_af <- sum(af_labels == TRUE)
+    n_nonaf <- sum(af_labels == FALSE)
     
-    # Calculate Observed Statistic
-    calc_stat <- function(af, nonaf, type) {
-      if (type == "Mean Difference") return(mean(af, na.rm=TRUE) - mean(nonaf, na.rm=TRUE))
-      if (type == "Median Difference") return(median(af, na.rm=TRUE) - median(nonaf, na.rm=TRUE))
-      if (type == "Kolmogorov-Smirnov (KS)") {
-        suppressWarnings(return(ks.test(af, nonaf)$statistic))
-      }
-    }
-    obs_stat <- calc_stat(g_af, g_nonaf, input$stat)
+    # ---------------------------------------------------------
+    # CUSTOM FAST KS-STATISTIC IMPLEMENTATION
+    # We pre-sort the data indices ONCE to optimize the loop.
+    # The actual numerical values never change, only their group labels do!
+    # ---------------------------------------------------------
+    sort_idx <- order(df$g)
     
-    # Calculate Cohen's d (Effect Size) for Mean Difference
-    n1 <- length(g_af); n2 <- length(g_nonaf)
-    var1 <- var(g_af, na.rm=TRUE); var2 <- var(g_nonaf, na.rm=TRUE)
-    pooled_sd <- sqrt(((n1 - 1) * var1 + (n2 - 1) * var2) / (n1 + n2 - 2))
-    cohens_d <- (mean(g_af, na.rm=TRUE) - mean(g_nonaf, na.rm=TRUE)) / pooled_sd
+    # Calculate Observed KS Statistic
+    sorted_labels_obs <- af_labels[sort_idx]
+    cdf_a_obs <- cumsum(sorted_labels_obs == TRUE) / n_af
+    cdf_b_obs <- cumsum(sorted_labels_obs == FALSE) / n_nonaf
+    obs_stat <- max(abs(cdf_a_obs - cdf_b_obs))
     
     # Permutation Loop
     perm_stats <- numeric(B)
     withProgress(message = 'Running Permutations...', value = 0, {
       for (i in 1:B) {
+        # Randomly shuffle the labels
         shuffled_labels <- sample(af_labels)
-        sim_af <- g_all[shuffled_labels == TRUE]
-        sim_nonaf <- g_all[shuffled_labels == FALSE]
-        perm_stats[i] <- calc_stat(sim_af, sim_nonaf, input$stat)
+        
+        # Apply the pre-calculated sorting order to the new labels
+        sorted_labels_sim <- shuffled_labels[sort_idx]
+        
+        # Compute empirical CDFs dynamically
+        cdf_a_sim <- cumsum(sorted_labels_sim == TRUE) / n_af
+        cdf_b_sim <- cumsum(sorted_labels_sim == FALSE) / n_nonaf
+        
+        # Calculate max distance (KS Statistic)
+        perm_stats[i] <- max(abs(cdf_a_sim - cdf_b_sim))
+        
         if (i %% 100 == 0) incProgress(100/B) 
       }
     })
     
     p_val <- (1 + sum(abs(perm_stats) >= abs(obs_stat), na.rm=TRUE)) / (B + 1)
     
-    return(list(obs = obs_stat, perms = perm_stats, p_val = p_val, data = df, 
-                cohens_d = cohens_d, B = B, dataset_meta = dataset))
+    return(list(obs = obs_stat, perms = perm_stats, p_val = p_val, data = df, B = B, dataset_meta = dataset))
   })
   
   # --- Outputs ---
   
   output$result_text <- renderUI({
-    if (input$run == 0) return(HTML("<p style='color: gray; font-style: italic;'>Please click 'Run Permutation Test' to view the results.</p>"))
+    if (input$run == 0) return(HTML("<p style='color: gray; font-style: italic;'>Please click 'Run Permutation Test' in the sidebar to view the results.</p>"))
     
     res <- perm_results()
-    
-    # CRITICAL FIX 3: Explain p-value better
     p_display <- ifelse(res$p_val < (1/res$B), paste0("< ", 1/res$B), round(res$p_val, 4))
     
     decision <- if(res$p_val < input$alpha) {
@@ -168,19 +202,13 @@ server <- function(input, output, session) {
       tags$span("FAIL TO REJECT the null hypothesis", style="color:green; font-weight:bold;")
     }
     
-    # Format Cohen's d Interpretation
-    d_mag <- abs(res$cohens_d)
-    d_interp <- if(d_mag < 0.2) "Negligible" else if(d_mag < 0.5) "Small" else if(d_mag < 0.8) "Medium" else "Large"
-    
     HTML(paste0(
       "<h4>Estimated Permutation P-value: <strong>", p_display, "</strong></h4>",
       "<p style='font-size: 0.9em; color: gray;'><em>Monte Carlo estimate based on B = ", res$B, " permutations.</em></p>",
       "<h4>Conclusion: ", as.character(decision), "</h4>",
       "<hr>",
-      "<p><strong>Observed ", input$stat, ":</strong> ", round(res$obs, 4), " years</p>",
-      "<p><strong>Standardized Effect Size (Cohen's d):</strong> ", round(res$cohens_d, 3), 
-      " <em>(", d_interp, " effect)</em></p>",
-      "<p style='font-size: 0.9em;'><em>Note: In large samples (N > 230,000), even small differences easily become statistically significant. Always interpret the practical magnitude (Cohen's d) alongside the p-value.</em></p>"
+      "<p><strong>Observed KS Statistic:</strong> ", round(res$obs, 4), "</p>",
+      "<p style='font-size: 0.9em;'><em>Note: The KS statistic measures the maximum distance between the empirical cumulative distribution functions (ECDF) of the two groups.</em></p>"
     ))
   })
   
@@ -192,11 +220,10 @@ server <- function(input, output, session) {
     ggplot(data.frame(x = res$perms), aes(x = x)) +
       geom_histogram(bins = 30, fill = "#3498db", color = "black", alpha = 0.7) +
       geom_vline(xintercept = res$obs, color = "#e74c3c", linetype = "dashed", linewidth = 1.2) +
-      geom_vline(xintercept = -res$obs, color = "#e74c3c", linetype = "dashed", linewidth = 1.2) +
       theme_minimal() +
-      labs(title = paste("Permutation Distribution of", input$stat),
-           subtitle = paste("Null hypothesis: Exchangeability between AF and non-AF groups"),
-           x = "Test Statistic under H0",
+      labs(title = "Permutation Distribution of the KS Statistic",
+           subtitle = "Null hypothesis: The Age Gap distributions are identical (exchangeable)",
+           x = "KS Statistic under H0",
            y = "Frequency")
   })
   
@@ -212,12 +239,11 @@ server <- function(input, output, session) {
         Mean_Gap = mean(g, na.rm=TRUE),
         Median_Gap = median(g, na.rm=TRUE),
         SD_Gap = sd(g, na.rm=TRUE),
-        IQR_Gap = IQR(g, na.rm=TRUE) # CRITICAL FIX 5: Added IQR
+        IQR_Gap = IQR(g, na.rm=TRUE) 
       ) %>%
       rename(`Atrial Fibrillation (AF)` = AF)
   })
   
-  # Data Flow tracking (Missing/Removed data)
   output$data_flow_text <- renderUI({
     req("Summary Table" %in% input$display)
     if (input$run == 0) return(NULL)
@@ -230,22 +256,6 @@ server <- function(input, output, session) {
       "Final sample size: ", nrow(meta$data), " unique patients.",
       "</div>"
     ))
-  })
-  
-  # CRITICAL FIX 6: Caveats panel
-  output$caveats_panel <- renderUI({
-    req("Caveats & Assumptions" %in% input$display)
-    card(
-      card_header("Statistical Caveats & Assumptions"),
-      HTML("
-        <ul>
-          <li><strong>Independence:</strong> We restrict the dataset to one exam per patient before permutation to satisfy the independence assumption of the test.</li>
-          <li><strong>Interpretation of P-value:</strong> The p-value is a Monte Carlo estimate. It will fluctuate slightly if you change the random seed or the number of permutations (B).</li>
-          <li><strong>Confounding Factors:</strong> A significant result indicates the age gap distribution differs between the AF and non-AF groups. However, this is an observational finding. The difference may be confounded by actual age, sex, or other comorbidities not accounted for in this simple two-sample comparison.</li>
-          <li><strong>Statistic Specificity:</strong> This test specifically evaluates the chosen statistic (e.g., Mean Difference). It does not test if the entire shape of the distributions are identical unless the KS statistic is selected.</li>
-        </ul>
-      ")
-    )
   })
 }
 
