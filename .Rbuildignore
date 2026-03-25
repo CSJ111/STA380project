@@ -1,4 +1,4 @@
-﻿^BasicImplementCheck$
+^BasicImplementCheck$
 ^grades$
 ^proposal1$
 ^STA380GroupForm\.xlsx$
@@ -6,3 +6,5 @@
 ^Testthat_Functions\.R$
 ^R/Vignette_NEW\.Rmd$
 ^\.Rhistory$
+^doc$
+^Meta$
