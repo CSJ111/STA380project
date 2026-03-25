@@ -213,7 +213,7 @@ server <- function(input, output, session) {
   })
   
   output$perm_plot <- renderPlot({
-    req("Permutation Plot" %in% input$display)
+    # req("Permutation Plot" %in% input$display)
     if (input$run == 0) return(NULL)
     res <- perm_results()
     
@@ -228,7 +228,7 @@ server <- function(input, output, session) {
   })
   
   output$summary_table <- renderTable({
-    req("Summary Table" %in% input$display)
+    # req("Summary Table" %in% input$display)
     if (input$run == 0) return(NULL)
     df <- perm_results()$data
     
@@ -245,7 +245,7 @@ server <- function(input, output, session) {
   })
   
   output$data_flow_text <- renderUI({
-    req("Summary Table" %in% input$display)
+    # req("Summary Table" %in% input$display)
     if (input$run == 0) return(NULL)
     meta <- perm_results()$dataset_meta
     HTML(paste0(
