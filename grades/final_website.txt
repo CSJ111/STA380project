@@ -1,0 +1,31 @@
+Thoughts:
+1. You are not analyzing g = nn_predicted_age - age. In your next paragraph, you mention explicitly "Instead of merely comparing the means (which could be done with a simple t-test)", so you should know this is not what you are doing.
+2. You mention in project intro that you compute the ks test statistic but in your permutation results you also show Cohen's d.
+
+Instead of this note:
+"Note: The KS statistic measures the maximum distance between the empirical CDFs of the two groups. Cohen's d quantifies the practical magnitude of the mean difference."
+
+You likely should just show the equations as well, as this plain-language summary can be a bit misleading.
+
+For the table in summary statistics, it would be nice if you actually had
+"Mean Gap" instead of "Mean_Gap" (i.e., no underscores for presentation reasons.)
+
+Underscores are appropriate if you're trying to showcase how to use some of your code (in like a vignette) or to explain some of the variable names like you had in your project intro. It's not that appropriate for tables or charts.
+
+For the "Statistical Caveats & Assumptions" section:
+Interpretation of P-value: The p-value is a Monte Carlo estimate. It will fluctuate slightly if you change the random seed or the number of permutations (B).
+
+You didn't really put in an actual interpretation of the p-value...
+
+"KS Statistic: We use the maximum absolute difference between the empirical cumulative distribution functions (ECDFs) of the two groups. This statistic is computed from scratch without relying on R's built-in ks.test()"
+
+I guess you did code the KS statistic from scratch now... But I'm also wondering why you tried to write the code from scratch (or used AI) as we have examples on how to implement this from scratch from lecture/assignment code. 
+
+Grade (based on Rubric):
+Additional features (-10%)
+I do love the plots in "distribution comparison". However, the additional features of the description in "project info" and "summary statistics" is very misleading. Most of this has to do with the fact that the information is inconsistent with the website description, meaning, the results may not be exactly the same as what the user thinks they are getting.
+
+Group grade: 5.76/6.4
+
+Individual grades are private and will be released later when posted on Quercus. Bonus marks, if applicable, are reflected on Quercus instead of feedback here.
+
