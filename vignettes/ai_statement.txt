@@ -1,1 +1,5 @@
-I use chatgpt to polish my writing, give some of the rmd codes and debug.
+I used ChatGPT (GPT-4o) to polish my writing, give some of the RMD codes, and debug.
+I used Claude (Opus 4.6, via Claude Code CLI) to fix package issues from grading
+feedback, enhance the Shiny app with additional features (plotly, ECDF plot,
+density plot, box plot, Cohen's d, DT table, CSV download), and draft the AI
+usage statement. See the vignette for full details.

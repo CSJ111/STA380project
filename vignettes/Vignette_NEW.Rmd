@@ -144,11 +144,54 @@ this default workflow.
 
 ## Generative AI Usage Statement
 
-Throughout this project, generative AI tools (ChatGPT and Claude) were used to:
+Two generative AI tools were used during the development of this project:
+**ChatGPT** (GPT-4o) [@openai2025chatgpt] and **Claude** (Opus 4.6, via Claude
+Code CLI) [@anthropic2025claude].
 
-- Polish written explanations and documentation.
-- Generate and debug R code, including Roxygen `@examples` sections and Shiny UI/server logic.
-- Assist with structuring the vignette and resolving `devtools::check()` issues.
+### ChatGPT usage
+
+- Polished written explanations and documentation in the vignette and README.
+- Provided initial drafts of some RMarkdown code blocks.
+- Assisted with debugging R code during early development.
+
+### Claude usage
+
+Claude was used via the **Claude Code** command-line interface, which reads the
+full project directory and edits files directly. Specific contributions include:
+
+1. **Package fixes (resolving grading feedback):**
+    - Added missing `importFrom(graphics, abline, hist)` to `NAMESPACE` and the
+      corresponding `@importFrom` roxygen tag in `plot_permutation_distribution.R`.
+    - Added `testthat (>= 3.0.0)` to the `Suggests` field in `DESCRIPTION` and
+      rewrote `tests/testthat.R` to use `library(STA380project)` instead of
+      `source()` calls, so that `devtools::check()` passes without errors.
+    - Renamed `vignettes/AI Statement.txt` to `vignettes/ai_statement.txt` to
+      fix the non-portable filename warning from `R CMD check`.
+    - Updated `.Rbuildignore` to exclude non-package files (`exams.csv`,
+      `manifest.json`, `.claude-monitor`).
+
+2. **Shiny app enhancements (`app.R`):**
+    - Replaced the static `ggplot2` permutation histogram with an interactive
+      **plotly** chart (`plotlyOutput` / `renderPlotly`).
+    - Added a new **"Distribution Comparison"** tab containing three new plots:
+      an **ECDF comparison plot** (`stat_ecdf`), a **density plot**
+      (`geom_density`), and a horizontal **box plot** (`geom_boxplot` with
+      `geom_jitter`).
+    - Restored the **Cohen's d effect size** calculation and display, with
+      magnitude interpretation (Negligible / Small / Medium / Large).
+    - Replaced the static `tableOutput` with an interactive **DT** datatable,
+      adding `Min_Gap` and `Max_Gap` columns.
+    - Added a **CSV download button** (`downloadHandler`) that exports the test
+      results and group summary statistics.
+    - Regenerated `manifest.json` via `rsconnect::writeManifest()` to include
+      `plotly`, `DT`, and all transitive dependencies for Posit Connect
+      deployment.
+
+3. **This AI usage statement** was also drafted by Claude and reviewed by the
+   team.
+
+All AI-generated code and text was reviewed, tested (via `devtools::check()`
+with 0 errors and 0 warnings), and validated by team members before inclusion.
 
 
 ## References
